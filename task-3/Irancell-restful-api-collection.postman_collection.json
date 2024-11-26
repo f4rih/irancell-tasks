@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "9ce0ff95-f7fc-486b-8b56-3f76d6a5332c",
+		"name": "Irancell-restful-api-collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38516946"
+	},
+	"item": [
+		{
+			"name": "get_kpi",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"layer\": \"province\",\n    \"elements\": [\"ALBORZ\", \"TEHRAN\"],\n    \"kpi\": \"(kpi_8 - kpi_6) / (kpi_1 + kpi_3)\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/v1/kpi/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"v1",
+						"kpi",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

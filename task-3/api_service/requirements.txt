@@ -1,0 +1,7 @@
+django==4.2.14
+djangorestframework==3.15.2
+psycopg2-binary==2.9.10
+pytest==8.3.3
+pytest-django==4.9.0
+gunicorn==23.0.0
+sympy==1.13.3

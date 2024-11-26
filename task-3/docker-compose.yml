@@ -1,0 +1,70 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: postgres-db
+    env_file:
+      - ./csv_loader_service/.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    networks:
+      - core-network
+
+  csv-loader:
+    build:
+      context: ./csv_loader_service
+      dockerfile: Dockerfile
+
+    container_name: csv-loader
+    env_file:
+      - ./csv_loader_service/.env
+    networks:
+      - core-network
+    depends_on:
+      - db
+
+  aggregator:
+    build:
+      context: ./aggregator_service
+      dockerfile: Dockerfile
+    container_name: aggregator
+    env_file:
+      - ./aggregator_service/.env
+    networks:
+      - core-network
+    depends_on:
+      - db
+      - csv-loader
+
+  api:
+    build:
+      context: ./api_service
+      dockerfile: Dockerfile
+    container_name: api
+    depends_on:
+      - db
+      - csv-loader
+      - aggregator
+    env_file:
+      - ./api_service/.env
+    ports:
+      - "8000:8000"
+    networks:
+      - core-network
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    networks:
+      - core-network
+
+networks:
+  core-network:
+    external: true
